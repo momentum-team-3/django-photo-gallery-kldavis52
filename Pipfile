@@ -11,10 +11,11 @@ django-extensions = "*"
 django-debug-toolbar = "*"
 werkzeug = "*"
 django-environ = "*"
-django-allauth = "*"
 django-heroku = "*"
 psycopg2 = "*"
 gunicorn = "*"
+django-imagekit = "*"
+django-registration-redux = "*"
 
 [requires]
 python_version = "3.8"
