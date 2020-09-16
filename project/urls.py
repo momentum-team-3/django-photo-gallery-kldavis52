@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
 from django.conf.urls import url
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("photogalle/", include("photogalle.urls")),
     url(r"^accounts/", include("registration.backends.simple.urls")),
+    path("", RedirectView.as_view(url="photogalle/", permanent=False)),
 ]
 
 if settings.DEBUG:
