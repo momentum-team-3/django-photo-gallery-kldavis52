@@ -16,15 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import include, path
-from django.conf.urls import url
 from django.views.generic.base import RedirectView
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("accounts/", include("registration.backends.simple.urls")),
     path("photogalle/", include("photogalle.urls")),
-    url(r"^accounts/", include("registration.backends.simple.urls")),
     path("", RedirectView.as_view(url="photogalle/", permanent=False)),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar

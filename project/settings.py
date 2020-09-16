@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "imagekit",
     # Project-specific
     "users",
+    "photogalle",
 ]
 
 # django-registration-redux requirement
@@ -155,6 +156,14 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+# media for photogalle - s3 bucket in future
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
+
+# Registration and login
+
+LOGIN_REDIRECT_URL = "/"
 
 # Configure Django App for Heroku.
 # import django_heroku
