@@ -38,37 +38,25 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.sites",
+    "registration",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.sites",
-    # django-allauth specific
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    # github auth
-    "allauth.socialaccount.providers.github",
     # Third-party
     "debug_toolbar",
     "django_extensions",
+    "imagekit",
     # Project-specific
     "users",
 ]
 
-SITE_ID = 1
+# django-registration-redux requirement
 
-# Change to github
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        "APP": {"client_id": "123", "secret": "456", "key": ""}
-    }
-}
+REGISTRATION_AUTO_LOGIN = True
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -99,13 +87,6 @@ TEMPLATES = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
-    "django.contrib.auth.backends.ModelBackend",
-    # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
-
 WSGI_APPLICATION = "project.wsgi.application"
 
 # Database
@@ -113,16 +94,16 @@ WSGI_APPLICATION = "project.wsgi.application"
 
 DATABASES = {"default": env.db()}
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": env("DATABASE_NAME"),
-#         "USER": env("DATABASE_USER"),
-#         "PASSWORD": env("DATABASE_PASSWORD"),
-#         "HOST": env("DATABASE_HOST"),
-#         "PORT": env("DATABASE_PORT"),
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("DATABASE_NAME"),
+        "USER": env("DATABASE_USER"),
+        "PASSWORD": env("DATABASE_PASSWORD"),
+        "HOST": env("DATABASE_HOST"),
+        "PORT": env("DATABASE_PORT"),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -176,7 +157,7 @@ INTERNAL_IPS = [
 ]
 
 # Configure Django App for Heroku.
-import django_heroku
+# import django_heroku
 
-django_heroku.settings(locals())
-del DATABASES["default"]["OPTIONS"]["sslmode"]
+# django_heroku.settings(locals())
+# del DATABASES["default"]["OPTIONS"]["sslmode"]
