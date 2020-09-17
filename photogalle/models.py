@@ -9,10 +9,20 @@ from imagekit.processors import ResizeToFit, ResizeToFill
 class Gallery(models.Model):
     private = models.BooleanField(default=False, null=False)
     date_time = models.DateTimeField(auto_now=True)
-    details = models.ForeignKey(
-        to="Detail", on_delete=models.CASCADE, null=False, blank=True
+    detail = models.ForeignKey(
+        to="Detail",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=True,
+        related_name="galleries",
     )
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=False, null=False)
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+        related_name="galleries",
+    )
 
 
 class Photo(models.Model):
@@ -30,29 +40,49 @@ class Photo(models.Model):
         options={"quality": 80},
     )
     date_time = models.DateTimeField(auto_now=True)
-    default_image = models.ForeignKey(
-        to="Gallery", on_delete=models.CASCADE, blank=True, null=True
+    pinned = models.BooleanField(default=False, null=False)
+    gallery = models.ForeignKey(
+        to="Gallery",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="photos",
     )
-    details = models.ForeignKey(
-        to="Detail", on_delete=models.CASCADE, null=False, blank=True
+    detail = models.ForeignKey(
+        to="Detail",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=True,
+        related_name="photos",
     )
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=False, null=False)
-
-    def aws_directory_path(self):
-        # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-        return "user_{0}/{1}".format(self.user.id, self.details.title)
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+        related_name="photos",
+    )
 
 
 class Comment(models.Model):
     comment = models.TextField(null=False, blank=True)
     date_time = models.DateTimeField(auto_now=True)
     photo = models.ForeignKey(
-        to="Photo", on_delete=models.CASCADE, blank=False, null=False
+        to="Photo",
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+        related_name="comments",
     )
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=False, null=False)
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
+        related_name="comments",
+    )
 
 
 class Detail(models.Model):
     title = models.CharField(max_length=511, null=False, blank=True)
     description = models.TextField(null=False, blank=True)
-    pinned = models.BooleanField(default=False, null=False)

@@ -1,18 +1,28 @@
 from django import forms
-from .models import Photo, Comment
+from .models import Gallery, Photo, Comment, Detail
+
+
+class GalleryForm(forms.ModelForm):
+    class Meta:
+        model = Gallery
+        fields = [
+            "private",
+        ]
+
+        widgets = {
+            "private": forms.BooleanField(required=False),
+        }
 
 
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
         fields = [
-            "title",
-            "description",
             "photo",
+            "pinned",
         ]
         widgets = {
-            "title": forms.TextInput(),
-            "description": forms.Textarea(),
+            "pinned": forms.BooleanField(required=False),
         }
 
 
@@ -23,3 +33,16 @@ class CommentForm(forms.ModelForm):
             "comment",
         ]
         widgets = {"comment": forms.Textarea()}
+
+
+class DetailForm(forms.ModelForm):
+    class Meta:
+        model = Detail
+        fields = [
+            "title",
+            "description",
+        ]
+        widgets = {
+            "title": forms.TextInput(),
+            "description": forms.Textarea(),
+        }
