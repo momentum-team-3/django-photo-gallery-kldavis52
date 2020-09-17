@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block content %}
+
+<h2>Create New Gallery</h2>
+
+<form
+  action="{% url 'create_gallery' %}"
+  method="POST"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %} {% form.as_p %}
+</form>
+
+{% endblock %}
