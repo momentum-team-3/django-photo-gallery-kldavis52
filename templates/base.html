@@ -3,12 +3,11 @@
 
 <html lang="en">
   <head>
-    {% block meta %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}Photo Galle{% endblock %}</title>
-    {% endblock %}
     <link rel="stylesheet" href="{% static 'style.css' %}" />
+    {% block meta %}{% endblock %}
   </head>
   <body>
     <div class="container">

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_extensions",
     "imagekit",
+    "storages",
     # Project-specific
     "users",
     "photogalle",
@@ -166,6 +167,7 @@ MEDIA_URL = "/media/"
 LOGIN_REDIRECT_URL = "/"
 
 # Configure Django App for Heroku.
+
 # import django_heroku
 
 # django_heroku.settings(locals())
