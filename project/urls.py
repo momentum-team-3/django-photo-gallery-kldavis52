@@ -20,9 +20,9 @@ from django.views.generic.base import RedirectView
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path("photogalle/", include("photogalle.urls")),
     path("admin/", admin.site.urls),
     path("accounts/", include("registration.backends.simple.urls")),
-    path("photogalle/", include("photogalle.urls")),
     path("", RedirectView.as_view(url="photogalle/", permanent=False)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

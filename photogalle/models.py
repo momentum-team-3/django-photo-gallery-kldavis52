@@ -1,6 +1,5 @@
 from django.db import models
 from users.models import User
-from datetime import datetime
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit, ResizeToFill
 
@@ -11,7 +10,7 @@ class Gallery(models.Model):
     private = models.BooleanField(default=False, null=False)
     date_time = models.DateTimeField(auto_now=True)
     details = models.ForeignKey(
-        to="Details", on_delete=models.CASCADE, null=False, blank=True
+        to="Detail", on_delete=models.CASCADE, null=False, blank=True
     )
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=False, null=False)
 
@@ -35,7 +34,7 @@ class Photo(models.Model):
         to="Gallery", on_delete=models.CASCADE, blank=True, null=True
     )
     details = models.ForeignKey(
-        to="Details", on_delete=models.CASCADE, null=False, blank=True
+        to="Detail", on_delete=models.CASCADE, null=False, blank=True
     )
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=False, null=False)
 
@@ -53,7 +52,7 @@ class Comment(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=False, null=False)
 
 
-class Details(models.Model):
+class Detail(models.Model):
     title = models.CharField(max_length=511, null=False, blank=True)
     description = models.TextField(null=False, blank=True)
     pinned = models.BooleanField(default=False, null=False)
