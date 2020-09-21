@@ -1,7 +1,12 @@
 {% extends "base.html" %} {% block content %} {% if user.is_authenticated %}
 <h2>Hello, {{ user.username }}</h2>
 <br />
-<p><a href="{% url 'auth_logout' %}">Logout</a></p>
+<p>
+  <a class="text" href="{% url 'create_gallery' %}">Create New Gallery</a
+  ><span> | </span
+  ><a class="text" href="{% url 'list_galleries' %}">View Galleries</a
+  ><span> | </span><a class="text" href="{% url 'auth_logout' %}">Logout</a>
+</p>
 {% else %}
 <p>
   <a href="{% url 'auth_login' %}">Login</a>

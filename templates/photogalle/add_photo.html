@@ -1,15 +1,15 @@
 {% extends "base.html" %} {% block content %}
 
-<h2>Create New Gallery</h2>
+<h2>Add New Photo</h2>
 
 <form
-  action="{% url 'create_gallery' %}"
+  action="{% url 'add_photo' gallery_pk=gallery.pk %}"
   method="POST"
   enctype="multipart/form-data"
 >
   {% csrf_token %} {{ form.as_p }}
   <div>
-    <button type="submit" class="btn btn-primary">Create Gallery</button>
+    <button type="submit" class="btn btn-primary">Add Photo</button>
   </div>
 </form>
 

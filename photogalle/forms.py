@@ -1,28 +1,38 @@
 from django import forms
-from .models import Gallery, Photo, Comment, Detail
+from .models import Gallery, Photo, Comment
 
 
 class GalleryForm(forms.ModelForm):
+    private = forms.BooleanField(widget=forms.CheckboxInput, required=False)
+
     class Meta:
         model = Gallery
         fields = [
+            "title",
+            "description",
             "private",
         ]
 
         widgets = {
-            "private": forms.BooleanField(required=False),
+            "title": forms.TextInput(),
+            "description": forms.Textarea(),
         }
 
 
 class PhotoForm(forms.ModelForm):
+    pinned = forms.BooleanField(widget=forms.CheckboxInput, required=False)
+
     class Meta:
         model = Photo
         fields = [
-            "photo",
+            "title",
+            "description",
+            "image",
             "pinned",
         ]
         widgets = {
-            "pinned": forms.BooleanField(required=False),
+            "title": forms.TextInput(),
+            "description": forms.Textarea(),
         }
 
 
@@ -33,16 +43,3 @@ class CommentForm(forms.ModelForm):
             "comment",
         ]
         widgets = {"comment": forms.Textarea()}
-
-
-class DetailForm(forms.ModelForm):
-    class Meta:
-        model = Detail
-        fields = [
-            "title",
-            "description",
-        ]
-        widgets = {
-            "title": forms.TextInput(),
-            "description": forms.Textarea(),
-        }

@@ -7,15 +7,11 @@ from imagekit.processors import ResizeToFit, ResizeToFill
 
 
 class Gallery(models.Model):
+    title = models.CharField(max_length=511, null=False, blank=True)
+    description = models.TextField(null=False, blank=True)
     private = models.BooleanField(default=False, null=False)
     date_time = models.DateTimeField(auto_now=True)
-    detail = models.ForeignKey(
-        to="Detail",
-        on_delete=models.CASCADE,
-        null=False,
-        blank=True,
-        related_name="galleries",
-    )
+    photo = models.ManyToManyField(to="Photo", related_name="photos", blank=True)
     user = models.ForeignKey(
         to=User,
         on_delete=models.CASCADE,
@@ -25,15 +21,18 @@ class Gallery(models.Model):
     )
 
 
+# NEED TO IMPLEMENT DEFAULT IMAGE
 class Photo(models.Model):
-    photo = models.ImageField(upload_to="photogalle/", null=True, blank=True)
-    photo_medium = ImageSpecField(
+    title = models.CharField(max_length=511, null=False, blank=True)
+    description = models.TextField(null=False, blank=True)
+    image = models.ImageField(upload_to="photogalle/", null=True, blank=True)
+    image_medium = ImageSpecField(
         source="image",
         processors=[ResizeToFit(300, 300)],
         format="JPEG",
         options={"quality": 80},
     )
-    photo_thumbnail = ImageSpecField(
+    image_thumbnail = ImageSpecField(
         source="image",
         processors=[ResizeToFill(150, 150)],
         format="JPEG",
@@ -41,20 +40,6 @@ class Photo(models.Model):
     )
     date_time = models.DateTimeField(auto_now=True)
     pinned = models.BooleanField(default=False, null=False)
-    gallery = models.ForeignKey(
-        to="Gallery",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
-        related_name="photos",
-    )
-    detail = models.ForeignKey(
-        to="Detail",
-        on_delete=models.CASCADE,
-        null=False,
-        blank=True,
-        related_name="photos",
-    )
     user = models.ForeignKey(
         to=User,
         on_delete=models.CASCADE,
@@ -81,8 +66,3 @@ class Comment(models.Model):
         null=False,
         related_name="comments",
     )
-
-
-class Detail(models.Model):
-    title = models.CharField(max_length=511, null=False, blank=True)
-    description = models.TextField(null=False, blank=True)

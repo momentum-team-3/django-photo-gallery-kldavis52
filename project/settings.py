@@ -162,7 +162,9 @@ MEDIA_URL = "/media/"
 
 # Registration and login
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/photogalle/list_galleries/"
+SIMPLE_BACKEND_REDIRECT_URL = "/photogalle/list_galleries/"
+LOGOUT_REDIRECT_URL = "/photogalle/"
 
 # Configure Django App for Heroku.
 

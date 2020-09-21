@@ -1,1 +1,18 @@
-{% extends "base.html" %} {% block content %} {% endblock %}
+{% extends "base.html" %} {% block content %} {% if user.is_authenticated %}
+<p><a class="text" href="{% url 'create_gallery' %}">Create New Gallery</a></p>
+{% endif %}
+<br />
+{% for gallery in galleries %} {%if not gallery.private%}
+<div class="container gallery">
+  <h2>{{ gallery.title }}</h2>
+  <p>{{ gallery.description }}</p>
+  <p>{{ gallery.user }} <span> | </span>{{ gallery.date_time }}</p>
+  <p>
+    <a class="text" href="{% url 'gallery_detail' gallery_pk=gallery.pk %}"
+      >View Gallery</a
+    >
+  </p>
+  {% endif %} {% endfor %}
+</div>
+
+{% endblock %}
