@@ -3,7 +3,7 @@ from api.serializers import GallerySerializer, PhotoSerializer, CommentSerialize
 from rest_framework import generics
 
 
-class GalleryList(generics.ListAPIView):
+class GalleryList(generics.ListCreateAPIView):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
 
@@ -13,7 +13,7 @@ class GalleryDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GallerySerializer
 
 
-class PhotoList(generics.ListAPIView):
+class PhotoList(generics.ListCreateAPIView):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
 
@@ -23,7 +23,7 @@ class PhotoDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PhotoSerializer
 
 
-class CommentList(generics.ListAPIView):
+class CommentList(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
