@@ -49,9 +49,11 @@ INSTALLED_APPS = [
     "django_extensions",
     "imagekit",
     "storages",
+    "rest_framework",
     # Project-specific
     "users",
     "photogalle",
+    "api",
 ]
 
 # django-registration-redux requirement
@@ -103,6 +105,15 @@ DATABASES = {
         "HOST": env("DATABASE_HOST"),
         "PORT": env("DATABASE_PORT"),
     }
+}
+
+
+# DRF
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ]
 }
 
 # Password validation

@@ -19,6 +19,9 @@ django-registration-redux = "*"
 pillow = "*"
 boto3 = "*"
 django-storages = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.8"
