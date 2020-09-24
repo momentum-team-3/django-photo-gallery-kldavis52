@@ -1,5 +1,5 @@
 from photogalle.models import Gallery, Photo, Comment
-from api.serializers import GallerySerializer, PhotoSerializer, CommentSerializer
+from api.serializers import GallerySerializer, PhotoSerializer, NestedCommentSerializer
 from rest_framework import generics, viewsets
 
 
@@ -35,20 +35,20 @@ class PhotoViewSet(viewsets.ModelViewSet):
         return self.request.user.photos
 
 
-class CommentViewSet(viewsets.ModelViewSet):
-    serializer_class = CommentSerializer
+# class CommentViewSet(viewsets.ModelViewSet):
+#     serializer_class = CommentSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+#     def perform_create(self, serializer):
+#         serializer.save(user=self.request.user)
 
-    def get_queryset(self):
-        if self.action in [
-            "list",
-            "create",
-            "retrieve",
-        ]:
-            return Comment.objects.all()
-        return self.request.user.comments
+#     def get_queryset(self):
+#         if self.action in [
+#             "list",
+#             "create",
+#             "retrieve",
+#         ]:
+#             return Comment.objects.all()
+#         return self.request.user.comments
 
 
 # class GalleryList(generics.ListCreateAPIView):

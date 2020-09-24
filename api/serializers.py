@@ -18,8 +18,23 @@ class GallerySerializer(serializers.ModelSerializer):
         ]
 
 
+class NestedCommentSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username", read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = [
+            "id",
+            "comment",
+            "date_time",
+            "username",
+        ]
+
+
 class PhotoSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", read_only=True)
+    comments = NestedCommentSerializer(many=True, read_only=True)
+    image_thumbnail = serializers.ImageField()
 
     class Meta:
         model = Photo
@@ -29,18 +44,8 @@ class PhotoSerializer(serializers.ModelSerializer):
             "description",
             "date_time",
             "pinned",
-            "username",
-        ]
-
-
-class CommentSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source="user.username", read_only=True)
-
-    class Meta:
-        model = Comment
-        fields = [
-            "id",
-            "comment",
-            "date_time",
+            "comments",
+            "image",
+            "image_thumbnail",
             "username",
         ]
