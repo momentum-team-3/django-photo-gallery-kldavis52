@@ -4,6 +4,8 @@ from rest_framework.routers import DefaultRouter
 
 api_router = DefaultRouter()
 api_router.register("galleries", viewset=views.GalleryViewSet, basename="gallery")
+api_router.register("photos", viewset=views.PhotoViewSet, basename="photo")
+api_router.register("comments", viewset=views.CommentViewSet, basename="comment")
 
 urlpatterns = api_router.urls
 

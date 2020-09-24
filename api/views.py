@@ -35,7 +35,7 @@ class PhotoViewSet(viewsets.ModelViewSet):
         return self.request.user.photos
 
 
-class CommentiewSet(viewsets.ModelViewSet):
+class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
     def perform_create(self, serializer):
