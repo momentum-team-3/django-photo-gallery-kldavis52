@@ -28,7 +28,7 @@ def create_gallery(request):
             gallery = form.save(commit=False)
             gallery.user = request.user
             gallery.save()
-            return redirect(to="add_photo", pk=gallery.pk)
+            return redirect(to="gallery_detail", gallery_pk=gallery.pk)
     form = GalleryForm()
     return render(request, "photogalle/create_gallery.html", {"form": form})
 

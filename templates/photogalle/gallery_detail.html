@@ -2,10 +2,13 @@
 <div class="container gallery">
   <h2>{{ gallery.title }}</h2>
   <p>{{ gallery.description }}</p>
+  <br />
   <p>
     <a class="text" href="{% url 'add_photo' gallery_pk=gallery.pk %}"
       >Add Phtotos</a
-    >
+    ><span> | </span
+    ><a class="text" href="{% url 'list_galleries' %}">View All Galleries</a
+    ><span> | </span><a class="text" href="{% url 'auth_logout' %}">Logout</a>
   </p>
   {% for photo in gallery.photos %}
   <div class="container photo">

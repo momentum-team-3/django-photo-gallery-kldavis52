@@ -18,7 +18,6 @@ from django.conf import settings
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django.conf.urls.static import static
-from rest_framework.routers import DefaultRouter
 from api import views as api_views
 
 # api_router = DefaultRouter()
@@ -31,6 +30,11 @@ urlpatterns = [
     path("", RedirectView.as_view(url="photogalle/", permanent=False)),
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include("api.urls")),
+    path(
+        "api/galleries/<int:pk>/image/",
+        api_views.ImageUploadView.as_view(),
+        name="image_upload",
+    )
     # path("api/", include(api_router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
