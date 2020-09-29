@@ -29,6 +29,25 @@ class GalleryListView(generics.ListCreateAPIView):
         gallery.user.add(self.request.user)
 
 
+class GalleryRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = GallerySerializer
+    lookup_field = "gallery_pk"
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def put(self, request, *args, **kwargs):
+        pass
+
+    def patch(self, request, *args, **kwargs):
+        pass
+
+    def delete(self, request, *args, **kwargs):
+        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
+        gallery.clear()
+        gallery.delete()
+
+
 class GalleryDetailView(generics.RetrieveAPIView):
     serializer_class = GallerySerializer
 
@@ -46,10 +65,6 @@ class GalleryUpdateView(generics.UpdateAPIView):
 
 class GalleryDestroyView(generics.DestroyAPIView):
     serializer_class = GallerySerializer
-
-    def perform_destroy(self, instance):
-        instance.clear()
-        instance.delete()
 
 
 # class GalleryViewSet(viewsets.ModelViewSet):

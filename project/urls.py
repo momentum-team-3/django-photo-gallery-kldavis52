@@ -30,11 +30,11 @@ urlpatterns = [
     path("", RedirectView.as_view(url="photogalle/", permanent=False)),
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include("api.urls")),
-    path(
-        "api/galleries/<int:pk>/image/",
-        api_views.ImageUploadView.as_view(),
-        name="image_upload",
-    )
+    # path(
+    #     "api/galleries/<int:pk>/image/",
+    #     api_views.ImageUploadView.as_view(),
+    #     name="image_upload",
+    # ),
     # path("api/", include(api_router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
