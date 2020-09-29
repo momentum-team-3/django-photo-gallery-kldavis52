@@ -18,11 +18,11 @@ from api.serializers import (
 )
 
 
-class GalleryListView(generics.ListCreateAPIView):
+class GalleryListCreateView(generics.ListCreateAPIView):
     serializer_class = GallerySerializer
 
     def get_queryset(self):
-        return Gallery.objects.for_user(self.request.user)
+        return Gallery.objects.all(private=False)
 
     def perform_create(self, serializer):
         gallery = serializer.save()
@@ -34,37 +34,50 @@ class GalleryRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = "gallery_pk"
 
     def get(self, request, *args, **kwargs):
-        pass
+        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
+        serializer = GallerySerializer(gallery)
+        return Response(data=serializer, status=status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs):
-        pass
+        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
+        serializer = GallerySerializer(gallery, data=self.request.data, partial=False)
+        if serializer.is_valid():
+            gallery = serializer.save()
+            return Response(
+                GallerySerializer(gallery).data, status=status.HTTP_204_NO_CONTENT
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, *args, **kwargs):
-        pass
+        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
+        serializer = GallerySerializer(gallery, data=self.request.data, partial=True)
+        if serializer.is_valid():
+            gallery = serializer.save()
+            return Response(
+                GallerySerializer(gallery).data, status=status.HTTP_204_NO_CONTENT
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):
         gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
         gallery.clear()
         gallery.delete()
+        Response(status=status.HTTP_202_ACCEPTED)
 
 
-class GalleryDetailView(generics.RetrieveAPIView):
-    serializer_class = GallerySerializer
+# class GalleryDetailView(generics.RetrieveAPIView):
+#     serializer_class = GallerySerializer
 
-    def get_queryset(self):
-        return Gallery.objects.filter(user=self.request.user)
-
-
-class GalleryUpdateView(generics.UpdateAPIView):
-    serializer_class = GallerySerializer
-    lookup_field = "id"
-
-    def get_queryset(self):
-        return self.request.user.galleries
+#     def get_queryset(self):
+#         return Gallery.objects.filter(user=self.request.user)
 
 
-class GalleryDestroyView(generics.DestroyAPIView):
-    serializer_class = GallerySerializer
+# class GalleryUpdateView(generics.UpdateAPIView):
+#     serializer_class = GallerySerializer
+#     lookup_field = "id"
+
+#     def get_queryset(self):
+#         return self.request.user.galleries
 
 
 # class GalleryViewSet(viewsets.ModelViewSet):

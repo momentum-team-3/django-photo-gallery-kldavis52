@@ -23,7 +23,7 @@ from . import views
 
 
 urlpatterns = [
-    path("galleries/", views.GalleryListView.as_view()),
+    path("galleries/", views.GalleryListCreateView.as_view()),
     path("galleries/<int:gallery_pk>/", views.GalleryRetrieveUpdateDestroy.as_view()),
     # path("photo_list/", views.PhotoList.as_view()),
     # path("photo_detail/", views.PhotoDetail.as_view()),
