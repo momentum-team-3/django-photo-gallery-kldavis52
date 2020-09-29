@@ -18,7 +18,8 @@ from django.conf import settings
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django.conf.urls.static import static
-from api import views as api_views
+
+# from api import views as api_views
 
 # api_router = DefaultRouter()
 # api_router.register("galleries", viewset=api_views.GalleryViewSet, basename="gallery")

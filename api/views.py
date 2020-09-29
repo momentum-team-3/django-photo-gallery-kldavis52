@@ -34,12 +34,12 @@ class GalleryRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = "gallery_pk"
 
     def get(self, request, *args, **kwargs):
-        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
+        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_pk"])
         serializer = GallerySerializer(gallery)
         return Response(data=serializer, status=status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs):
-        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
+        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_pk"])
         serializer = GallerySerializer(gallery, data=self.request.data, partial=False)
         if serializer.is_valid():
             gallery = serializer.save()
@@ -49,7 +49,7 @@ class GalleryRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, *args, **kwargs):
-        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
+        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_pk"])
         serializer = GallerySerializer(gallery, data=self.request.data, partial=True)
         if serializer.is_valid():
             gallery = serializer.save()
@@ -59,10 +59,37 @@ class GalleryRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):
-        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_id"])
+        gallery = get_object_or_404(Gallery, gallery_pk=kwargs["gallery_pk"])
         gallery.clear()
         gallery.delete()
         Response(status=status.HTTP_202_ACCEPTED)
+
+
+class PhotoListCreateView(generics.ListCreateAPIView):
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
+
+
+class PhotoRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    pass
+
+
+class ImageUploadView(views.APIView):
+    parser_classes = [
+        MultiPartParser,
+        FormParser,
+    ]
+
+    def post(self, request, pk, format=None):
+        print(request.data)
+        serializer = PhotoSerializer(data=request.data)
+        gallery = get_object_or_404(request.user.galleries, pk=pk)
+        if serializer.is_valid():
+            photo = serializer.save(user=request.user)
+            serializer.save()
+            gallery.photo.add(photo)
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class GalleryDetailView(generics.RetrieveAPIView):
@@ -111,23 +138,6 @@ class GalleryRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 #             return Photo.objects.all()
 #         return self.request.user.photos
 
-
-# class ImageUploadView(views.APIView):
-#     parser_classes = [
-#         MultiPartParser,
-#         FormParser,
-#     ]
-
-#     def post(self, request, pk, format=None):
-#         print(request.data)
-#         serializer = PhotoSerializer(data=request.data)
-#         gallery = get_object_or_404(request.user.galleries, pk=pk)
-#         if serializer.is_valid():
-#             photo = serializer.save(user=request.user)
-#             serializer.save()
-#             gallery.photo.add(photo)
-#             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # def post(self, request, pk):
 #     photo_serializer = PhotoSerializer(data=request.data)
