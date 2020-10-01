@@ -61,3 +61,20 @@ def add_photo(request, gallery_pk):
         "photogalle/add_photo.html",
         {"form": form, "gallery": gallery},
     )
+
+
+@login_required
+def photo_detail(request, photo_pk):
+    photo = get_object_or_404(request.user.photos, pk=photo_pk)
+    if request.method == "POST":  # user submits comment
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            photo.comments.add(comment)
+            return redirect(to="photo_detail", photo_pk=photo.pk)
+    form = CommentForm()
+    return render(
+        request, "photogalle/photo_detail.html", {"form": form, "photo": photo}
+    )

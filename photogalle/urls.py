@@ -9,6 +9,11 @@ urlpatterns = [
         "list_galleries/<int:gallery_pk>/", views.gallery_detail, name="gallery_detail"
     ),
     path(
+        "photos/<int:photo_pk>/",
+        views.photo_detail,
+        name="photo_detail",
+    ),
+    path(
         "list_galleries/<int:gallery_pk>/add_photo/", views.add_photo, name="add_photo"
     ),
 ]

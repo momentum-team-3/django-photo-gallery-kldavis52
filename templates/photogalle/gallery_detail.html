@@ -11,10 +11,11 @@
   <div class="cf pa2">
     {% for photo in photos %}
     <div class="fl pa2">
-      <img
-        src="{{ photo.image_medium.url }}"
-        class="w-100 db outline black-10"
-      />
+      <a href="{% url 'photo_detail' photo_pk=photo.pk %}"
+        ><img
+          src="{{ photo.image_medium.url }}"
+          class="w-100 db outline black-10"
+      /></a>
       <dl class="mt2 f6 lh-copy">
         <dt class="ml0 black">{{ photo.title }}</dt>
         <dd class="ml0 gray w-100">{{ photo.description }}</dd>
