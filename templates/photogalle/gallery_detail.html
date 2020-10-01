@@ -1,19 +1,30 @@
 {% extends "base.html" %} {% block content %}
-<p>
-  <a href="{% url 'add_photo' gallery_pk=gallery.pk %}">Add Photo</a>
-</p>
-<div class="container gallery">
+
+<div class="tc pv4 avenir">
   <h2>{{ gallery.title }}</h2>
-  <p>{{ gallery.description }}</p>
-  <p>{{ gallery.user }}</p>
+  <a class="tc pv4 avenir" href="{% url 'add_photo' gallery_pk=gallery.pk %}"
+    >Add Photo</a
+  >
   <br />
-  {% for photo in photos %}
-  <div class="container photo">
-    <p>{{ photo.title }}</p>
-    <p><img src="{{ photo.image_medium.url }}" /></p>
-    <p>{{ photo.description }}</p>
-    <p>{{ photo.date_time}} <span> | </span>{{ photo.user }}</p>
-  </div>
-  {% endfor %}
 </div>
+<article>
+  <div class="cf pa2">
+    {% for photo in photos %}
+    <div class="fl pa2">
+      <img
+        src="{{ photo.image_medium.url }}"
+        class="w-100 db outline black-10"
+      />
+      <dl class="mt2 f6 lh-copy">
+        <dt class="ml0 black">{{ photo.title }}</dt>
+        <dd class="ml0 gray w-100">{{ photo.description }}</dd>
+        <dd class="ml0 gray w-100">
+          {{ photo.date_time}} <span> | </span>{{ photo.user }}
+        </dd>
+      </dl>
+    </div>
+    {% endfor %}
+  </div>
+</article>
+
 {% endblock %}
