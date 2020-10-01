@@ -36,7 +36,7 @@ def create_gallery(request):
 @login_required
 def gallery_detail(request, gallery_pk):
     gallery = get_object_or_404(request.user.galleries, pk=gallery_pk)
-    photos = Photo.objects.filter(photos=gallery.pk)
+    photos = gallery.photos.all()
     return render(
         request,
         "photogalle/gallery_detail.html",
@@ -53,6 +53,7 @@ def add_photo(request, gallery_pk):
             photo = form.save(commit=False)
             photo.user = request.user
             photo.save()
+            photo.galleries.add(gallery)
             return redirect(to="gallery_detail", gallery_pk=gallery_pk)
     form = PhotoForm()
     return render(

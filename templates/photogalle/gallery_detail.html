@@ -1,18 +1,17 @@
 {% extends "base.html" %} {% block content %}
+<p>
+  <a href="{% url 'add_photo' gallery_pk=gallery.pk %}">Add Photo</a>
+</p>
 <div class="container gallery">
   <h2>{{ gallery.title }}</h2>
   <p>{{ gallery.description }}</p>
+  <p>{{ gallery.user }}</p>
   <br />
-  <p>
-    <a class="text" href="{% url 'add_photo' gallery_pk=gallery.pk %}"
-      >Add Phtotos</a
-    ><span> | </span
-    ><a class="text" href="{% url 'list_galleries' %}">View All Galleries</a
-    ><span> | </span><a class="text" href="{% url 'auth_logout' %}">Logout</a>
-  </p>
-  {% for photo in gallery.photos %}
+  {% for photo in photos %}
   <div class="container photo">
-    <p><img src="{{ photo.url }}" /></p>
+    <p>{{ photo.title }}</p>
+    <p><img src="{{ photo.image_medium.url }}" /></p>
+    <p>{{ photo.description }}</p>
     <p>{{ photo.date_time}} <span> | </span>{{ photo.user }}</p>
   </div>
   {% endfor %}

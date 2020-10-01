@@ -9,7 +9,7 @@ from imagekit.processors import ResizeToFit, ResizeToFill
 class Gallery(models.Model):
     title = models.CharField(max_length=511, null=False, blank=True)
     description = models.TextField(null=False, blank=True)
-    photo = models.ManyToManyField(to="Photo", related_name="galleries", blank=True)
+    photos = models.ManyToManyField(to="Photo", related_name="galleries", blank=True)
     private = models.BooleanField(default=False, null=False)
     date_time = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(
