@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="tc pv4 avenir">
+  <h2>{{ gallery.title }}</h2>
+  <a class="tc pv4 avenir" href="{% url 'add_photo' gallery_pk=gallery.pk %}"
+    >Add Photo</a
+  >
+  <br />
+</div>
+<article>
+  <div class="cf pa2">
+    {% for photo in photos %}
+    <div class="fl pa2">
+      <a href="{% url 'photo_detail' photo_pk=photo.pk %}"
+        ><img
+          src="{{ photo.image_medium.url }}"
+          class="w-100 db outline black-10"
+      /></a>
+      <dl class="mt2 f6 lh-copy">
+        <dt class="ml0 black">{{ photo.title }}</dt>
+        <dd class="ml0 gray w-100">{{ photo.description }}</dd>
+        <dd class="ml0 gray w-100">
+          {{ photo.date_time}} <span> | </span>{{ photo.user }}
+        </dd>
+      </dl>
+    </div>
+    {% endfor %}
+  </div>
+</article>
+
+{% endblock %}

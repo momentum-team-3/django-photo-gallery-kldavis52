@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<br />
+{% for gallery in galleries %} {%if not gallery.private%}
+<div class="container gallery">
+  <h2>{{ gallery.title }}</h2>
+  <p>{{ gallery.description }}</p>
+  <p>{{ gallery.user }} <span> | </span>{{ gallery.date_time }}</p>
+  <p>
+    <a href="{% url 'gallery_detail' gallery_pk=gallery.pk %}">View Gallery</a>
+  </p>
+</div>
+{% endif %} {% endfor %} {% endblock %}
